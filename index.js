@@ -2,7 +2,7 @@ class Usuario {
   nombre
   apellido
   libros = [{}]
-  mascotas= []
+  mascotas = []
   
   constructor (nombre, apellido, libros,mascotas ) {
     this.nombre = nombre
@@ -12,13 +12,13 @@ class Usuario {
   }
 
   getFullName () {
-    return  `${this.nombre} `
+    return  `${this.nombre} + ${this.apellido}`
   }
   addMascota (mascota){
     this.mascotas.push(mascota)
   }
   countMascotas (){
-    return this.libros.len()
+    return this.mascotas.length
   }
   addBook(nombre, autor){
     this.libros.push({nombre,autor})
@@ -31,12 +31,8 @@ class Usuario {
   }
 }
 
-const usuario1 = new Usuario ("Nicolas", "Uicich",  [{nombre: 'El señor de las moscas',autor: 'William Golding'}, {nombre: 'Fundacion', autor: 'Isaac Asimov'}], ["perro", "gato"])
-// usuario1.addBook("transformers 1", "michael bay")
-// usuario1.addBook("transformers 2", "michael bay")
-// usuario1.addBook("transformers 3", "michael bay")
-// usuario1.addBook("transformers 4", "michael bay")
+const usuario1 = new Usuario ("Elon", "Musk",  [{nombre: 'El señor de las moscas',autor: 'William Golding'}, {nombre: 'Fundacion', autor: 'Isaac Asimov'}], ["perro", "gato"])
 
-// usuario1.addBook("transformers 5", "michael bay")
-
-console.log(usuario1.getFullName())
+console.log( "Cantidad de mascotas: ", usuario1.countMascotas())
+console.log("Libros: ", usuario1.getBookNames())
+console.log("Nombre Completo: ", usuario1.getFullName())
