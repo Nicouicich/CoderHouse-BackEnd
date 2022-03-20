@@ -22,17 +22,5 @@
 		"price": 45,
 		"thumbnail": "https",
 		"id": 4
-	},
-	{
-		"title": "Hoja",
-		"price": 45,
-		"thumbnail": "https",
-		"id": 5
-	},
-	{
-		"title": "Hoja",
-		"price": 45,
-		"thumbnail": "https",
-		"id": 6
 	}
 ]
