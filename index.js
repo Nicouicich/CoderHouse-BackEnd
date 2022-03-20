@@ -25,19 +25,19 @@ class Container {
       let arr=[]
       let data=await this.read()
 
-      if (product == 0){
+      if (product==0) {
         await fs.writeFile(this.fileName, "")
-        return("Todos los productos eliminados con exito")
+        return ("Todos los productos eliminados con exito")
       }
-      else{
+      else {
         product.id=id
         if (data===undefined)
           arr=[product]
         else {
-          for (let i in data) {
-            arr.push(data[i])
-            if (id<data[i].id)
-              id=data[i].id
+          for (let item of data) {
+            arr.push(item)
+            if (id<item.id)
+              id=item.id
           }
           product.id=id+1
           arr.push(product)
@@ -59,9 +59,9 @@ class Container {
       let arr=[]
       let deletedID=false
       let data=await this.read()
-      for (let i in data) { // si le pasan un id para borrar directamente no lo escribo en el nuevo array y seteo deletedID en true
-        if (data[i].id!=id)
-          arr.push(data[i])
+      for (let item of data) { // si le pasan un id para borrar directamente no lo escribo en el nuevo array y seteo deletedID en true
+        if (item.id!=id)
+          arr.push(item)
         else
           deletedID=true
       }
@@ -132,12 +132,12 @@ class Container {
 
   deleteAll () {
     this.write(0)
-    .then ((resp) => {
-      console.log(resp)
-    })
-    .catch ((err) => {
-      console.log(err)
-    })
+      .then((resp) => {
+        console.log(resp)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 
@@ -148,8 +148,8 @@ const obj={
   "price": 45,
   "thumbnail": "https"
 }
-container.save (obj)
-container.getById(4)
-container.deleteById(4)
-container.getAll()
-container.deleteAll()
+container.save(obj)
+// container.getById(4)
+// container.deleteById(4)
+// container.getAll()
+// container.deleteAll()
