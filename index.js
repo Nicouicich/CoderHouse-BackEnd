@@ -1,5 +1,6 @@
 const fs = require('fs/promises')
 const path = require('path')
+const express = require('express')
 
 class Container {
   fileName
@@ -9,7 +10,6 @@ class Container {
   }
 
   async read() {
-    // Con esta funcion, al recibir un id < 0 se devuelven todo completo. Si tiene un ID, devuelve unicamente ese objeto ---
     try {
       const data = await fs.readFile(this.fileName, 'utf-8')
       return JSON.parse(data)
@@ -112,6 +112,22 @@ class Container {
         console.log(err)
       })
   }
+  getIDs() {
+    
+    this.read()
+    .then ((resp) => {
+      let arr =[]
+      for (let item of resp){
+        //console.log(item.id)
+        console.log("arr:",arr)
+        arr.push(item.id)
+      }
+      return( arr)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   deleteAll() {
     this.write(0)
@@ -131,8 +147,23 @@ const obj = {
   price: 45,
   thumbnail: 'https',
 }
-container.save(obj)
+//container.save(obj)
 // container.getById(4)
 // container.deleteById(4)
 // container.getAll()
 // container.deleteAll()
+
+console.log(container.getIDs())
+
+// const app = express()
+// const port = 8080;
+// const server = app.listen(port, () =>{
+// })
+
+// app.get('/productos', (req,res) => {
+//   res.send({mensaje: container.getAll()})
+// })
+
+// app.get('/productoRandom', (req,res) => {
+//   res.send({mensaje: container.getAll()})
+// })
