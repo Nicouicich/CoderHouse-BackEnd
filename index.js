@@ -77,14 +77,12 @@ class Container {
       })
   }
 
-  getById(id) {
-    this.read()
+  async getById(id) {
+    return await this.read()
       .then((resp) => {
-        let idFound
-
         if (id > 0) {
-          const product = resp.find((element) => element.id === id)
-          if (product) console.log(product)
+          const product = resp.find((element) => element.id == id)
+          if (product) return product
           else throw new Error(null)
         } else console.log('ID incorrecto')
       })
@@ -112,21 +110,9 @@ class Container {
         console.log(err)
       })
   }
-  getIDs() {
-    
-    this.read()
-    .then ((resp) => {
-      let arr =[]
-      for (let item of resp){
-        //console.log(item.id)
-        console.log("arr:",arr)
-        arr.push(item.id)
-      }
-      return( arr)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+
+  async getIDs() {
+    return await this.read().then((item) => item.map((item) => item.id))
   }
 
   deleteAll() {
@@ -148,22 +134,41 @@ const obj = {
   thumbnail: 'https',
 }
 //container.save(obj)
-// container.getById(4)
-// container.deleteById(4)
-// container.getAll()
-// container.deleteAll()
 
-console.log(container.getIDs())
+async function getById(id) {
+  return await container.getById(id)
+}
 
-// const app = express()
-// const port = 8080;
-// const server = app.listen(port, () =>{
-// })
+async function showIDs() {
+  return await container.getIDs()
+}
 
-// app.get('/productos', (req,res) => {
-//   res.send({mensaje: container.getAll()})
-// })
+const app = express()
+const port = 8080
+const server = app.listen(port, () => {})
 
-// app.get('/productoRandom', (req,res) => {
-//   res.send({mensaje: container.getAll()})
-// })
+app.get('/productos', (req, res) => {
+  container
+    .read()
+    .then((resp) => {
+      let arr = []
+      resp.map((prod) => arr.push(prod))
+      res.send(arr)
+    })
+    .catch((err) => res.send(err))
+})
+
+app.get('/productoRandom', (req, res) => {
+  showIDs()
+    .then((resp) => {
+      let ids = []
+      resp.forEach((element) => {
+        ids.push(element)
+      })
+      let id = ids [Math.floor(Math.random() * ids.length)]
+      getById(id)
+        .then((resp) => res.send(resp))
+        .catch((err) => console.log(res))
+    })
+    .catch((err) => console.log(err))
+})
