@@ -1,9 +1,8 @@
-const fs = require('fs/promises')
+const fs = require('fs')
 const path = require('path')
 const express = require('express')
 
 class Container {
-  fileName
 
   constructor(fileName) {
     this.fileName = fileName
@@ -11,7 +10,7 @@ class Container {
 
   async read() {
     try {
-      const data = await fs.readFile(this.fileName, 'utf-8')
+      const data = await fs.promises.readFile(this.fileName, 'utf-8')
       return JSON.parse(data)
     } catch (err) {
       console.log('Archivo vacio')
@@ -25,7 +24,7 @@ class Container {
       let data = await this.read()
 
       if (product == 0) {
-        await fs.writeFile(this.fileName, '')
+        await fs.promises.writeFile(this.fileName, '')
         return 'Todos los productos eliminados con exito'
       } else {
         product.id = id
@@ -67,7 +66,7 @@ class Container {
     }
   }
 
-  save = function (product) {
+  save(product) {
     this.write(product)
       .then((resp) => {
         console.log(resp)
@@ -126,7 +125,7 @@ class Container {
   }
 }
 
-container = new Container('./productos.txt')
+const container = new Container('./productos.txt')
 
 const obj = {
   title: 'Hoja',
