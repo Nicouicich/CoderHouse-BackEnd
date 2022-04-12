@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-let products = [
+const products = [
   {
     title: 'Escuadra',
     price: 1111.45,
@@ -32,27 +32,24 @@ let products = [
 ]
 
 router.get('/', (req, res) => {
-  res.status(201).json({
-    data: products,
-  })
+  // res.status(201).json({
+  //   data: products,
+  // })
+  res.render('main',products)
+
 })
 
 router.get('/:id', (req, res) => {
   const idBuscado = req.params.id
   const id = products.findIndex((prod) => prod.id == idBuscado)
-  // container
-  //   .read()
-  //   .then((resp) => {
-  //     res.send(resp.find((prod) => prod.id == idBuscado))
-  //   })
-  //   .catch((err) => res.send(err))
-  if (id != -1)
-    res.status(201).json({
-      data: products[id],
-  })
-  res.status(404).json({
-    msg: 'Producto inexistente',
-  })
+
+  // if (id != -1)
+  //   res.status(201).json({
+  //     data: products[id],
+  // })
+  // res.status(404).json({
+  //   msg: 'Producto inexistente',
+  // })
 })
 
 // router.get('/productoRandom', (req, res) => {
@@ -104,9 +101,6 @@ router.post('/', (req, res) => {
   const searchId = Number(req.params.id)
   const body = req.body
 
-
-
-
   if (
     !body.title ||
     !body.price ||
@@ -149,9 +143,5 @@ router.delete('/:id', (req, res) => {
     data: products,
   })
 })
-
-
-
-
 
 module.exports = router

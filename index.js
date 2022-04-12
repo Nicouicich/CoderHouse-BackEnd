@@ -141,6 +141,8 @@ async function getById(id) {
 async function showIDs() {
   return await container.getIDs()
 }
+const viewsFolderPath = path.resolve(__dirname, './views/')
+
 
 const app = express()
 app.use(express.json())
@@ -149,3 +151,10 @@ const port = 8080
 const server = app.listen(port, () => {})
 
 app.use('/api/', mainRouter)
+const publicFolderPath = path.resolve(__dirname, './public')
+
+app.use (express.static(publicFolderPath))
+
+app.set('view engine', 'pug')
+const viewPath = path.resolve(__dirname,'./views/')
+app.set('views', viewsFolderPath)

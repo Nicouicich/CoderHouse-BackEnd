@@ -1,0 +1,25 @@
+html
+  
+  head
+    title Productos
+  body
+    div
+      h1 Productos
+      ul
+        tr
+          th ID 
+          th Nombre
+          th Precio
+          th Foto 
+      
+      
+        each prod in products
+          tr
+            td = prod.id
+            td = prod.title 
+            td = prod.price
+            td = prod.thumbnail
+
+              
+          
+
