@@ -1,0 +1,14 @@
+form(method="POST" action="/api/newproduct")
+  div 
+    label(for="title") Nombre
+    input(type="string" name="title" required)
+  div 
+    label(for="price") Precio
+    input(type="number" name="price" required)
+  div 
+    label(for="thumbnail") URL
+    input(type="string" name="thumbnail" required)
+  div 
+    input(type="submit")
+
+a(href="/api/productos"): button(type="button" ) Productos

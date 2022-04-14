@@ -1,41 +1,13 @@
 const express = require('express')
 const router = express.Router()
-
-const products = [
-  {
-    title: 'Escuadra',
-    price: 1111.45,
-    thumbnail:
-      'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png',
-    id: 1,
-  },
-  {
-    title: 'Calculadora',
-    price: 234.56,
-    thumbnail:
-      'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png',
-    id: 2,
-  },
-  {
-    title: 'Globo Terráqueo',
-    price: 345.67,
-    thumbnail:
-      'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png',
-    id: 3,
-  },
-  {
-    title: 'Hoja',
-    price: 45,
-    thumbnail: 'https',
-    id: 4,
-  },
-]
+const Products = require('../controller/products')
 
 router.get('/', (req, res) => {
   // res.status(201).json({
   //   data: products,
   // })
-  res.render('main',products)
+  products = Products.getProducts()
+  res.render('main',{products})
 
 })
 
@@ -97,35 +69,6 @@ router.put('/:id', (req, res) => {
   })
 })
 
-router.post('/', (req, res) => {
-  const searchId = Number(req.params.id)
-  const body = req.body
-
-  if (
-    !body.title ||
-    !body.price ||
-    !body.thumbnail||
-    typeof body.title != 'string' ||
-    typeof body.price != 'number' ||
-    typeof body.thumbnail != 'string'
-  )
-    return res.status(400).json({
-      msg: 'Producto ingresado de manera incorrecta',
-    })
-    const newProduct = {
-      id :products.length+1,
-      title: body.title,
-      price: body.price,
-      thumbnail: body.thumbnail
-  
-    }
-
-  products.push(newProduct)
-
-  res.status(201).json({
-    data: newProduct,
-  })
-})
 
 
 router.delete('/:id', (req, res) => {

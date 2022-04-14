@@ -1,25 +1,21 @@
 html
-  
   head
     title Productos
+    link(rel="stylesheet" href="/styles.css")
   body
     div
       h1 Productos
-      ul
+      table
         tr
           th ID 
           th Nombre
           th Precio
           th Foto 
-      
-      
-        each prod in products
-          tr
-            td = prod.id
-            td = prod.title 
-            td = prod.price
-            td = prod.thumbnail
-
-              
-          
-
+          each prod in products
+            tr
+              td= prod.id
+              td= prod.title 
+              td= prod.price
+              td
+                img(src=prod.thumbnail, alt="") 
+  a(href="/api/newproduct"): button(type="button") Nuevo Producto
