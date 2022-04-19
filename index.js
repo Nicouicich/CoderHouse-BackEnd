@@ -1,7 +1,9 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
-const mainRouter = require ('./src/routes/index.js')
+const mainRouter = require('./src/index.js')
+const http = require('http')
+const io = require('socket.io')
 
 class Container {
   constructor(fileName) {
@@ -143,18 +145,39 @@ async function showIDs() {
 }
 const viewsFolderPath = path.resolve(__dirname, './views/')
 
-
 const app = express()
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
 const port = 8080
-const server = app.listen(port, () => {})
+const server = http.Server(app)
+app.set('views', viewsFolderPath)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+server.listen(port, () => console.log('Server Up en el puerto ', port))
 
 app.use('/api/', mainRouter)
 const publicFolderPath = path.resolve(__dirname, './public')
-
-app.use (express.static(publicFolderPath))
+app.use(express.static(publicFolderPath))
 
 app.set('view engine', 'pug')
-const viewPath = path.resolve(__dirname,'./views/')
-app.set('views', viewsFolderPath)
+const viewPath = path.resolve(__dirname, './views/')
+
+const messages = []
+
+const myServer = io(server)
+myServer.on('connection', (socket) => {
+  console.log('Un cliente se conecto en el socket: ', socket.id)
+
+  socket.on('new-message', (userData, data) => {
+    const newMessage = {
+      user: userData,
+      message: data,
+    }
+    messages.push(newMessage)
+    myServer.emit('messages', messages)
+
+    socket.on('messages', (data) => {
+      console.log('Recibi un mensaje')
+      render(data)
+    })
+  })
+})
