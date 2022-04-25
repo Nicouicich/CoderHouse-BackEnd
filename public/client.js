@@ -1,5 +1,8 @@
-const socket = io.connect()
+
+const socket = io.connect('http://localhost:8080',{forceNew: true})
 let user = null
+
+
 socket.emit('askData')
 
 function sendData (data) {
@@ -13,7 +16,7 @@ function sendUser (e) {
 function render (data) {
   var html = data.map ((elem,index) => {
     return `<div>
-      <strong>Usuario: ${user}</strong>:
+      <strong>Usuario: ${elem.user}</strong>:
       <em>${elem.message}<em>
     `
     
