@@ -1,5 +1,5 @@
 import { Express, Router, Request, Response } from "express";
-import { Product } from "../utils/products/Product";
+import { Product } from "../controllers/products/Product";
 import { middlewareAuth } from "./middlewares/middlewares";
 
 import {
@@ -8,7 +8,7 @@ import {
   deleteByID,
   upgradeById,
   getProductById,
-} from "../utils/products/products";
+} from "../controllers/products/products";
 const router = Router();
 
 router.get("/:id?", (req, res) => {

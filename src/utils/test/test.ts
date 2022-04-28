@@ -1,9 +1,9 @@
 import { prototype } from "events";
 import {v4 as uuid } from "uuid";
-import { Product } from "../products/Product";
-import {newCart,deleteAllCarts } from "../cart/carts";
-import { newProduct, deleteAllProducts } from "../products/products";
-import { Cart } from "../cart/Cart";
+import { Product } from "../../controllers/products/Product";
+import {newCart,deleteAllCarts } from "../../controllers/cart/carts";
+import { newProduct, deleteAllProducts } from "../../controllers/products/products";
+import { Cart } from "../../controllers/cart/Cart"
 
 
 async function newTestProducts() {

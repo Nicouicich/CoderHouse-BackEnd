@@ -9,9 +9,9 @@ import {
   deleteCartProductById,
   getCartProductsById,
   addCartProductById,
-} from "../utils/cart/carts";
-import { Cart } from "../utils/cart/Cart";
-import { Product } from "../utils/products/Product";
+} from "../controllers/cart/carts";
+import { Cart } from "../controllers/cart/Cart";
+import { Product } from "../controllers/products/Product";
 
 const router = Router();
 
