@@ -1,4 +1,4 @@
-const mysql = {
+const dbConfig = {
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
@@ -9,5 +9,5 @@ const mysql = {
   pool: { min: 0, max: 7 }
 }
 module.exports = {
-  mysql
+  dbConfig
 }
