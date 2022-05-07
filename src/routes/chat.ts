@@ -8,6 +8,17 @@ router.get('/', (req, res) => {
   res.render('index')
 })
 
-router.post("/", newMessage);
+router.post("/",(req: Request, res: Response)=>{
+  const { nombre, mensaje } = req.body;
+
+    const data = {
+      nombre,
+      mensaje,
+    };
+  let msg = newMessage(data)
+  res.json({
+    data: msg,
+  });
+});
 
 export { router };

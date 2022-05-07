@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { DBService } from "../../../models/MariaDB/MariaDB";
+import { DBService } from "../../../models/SQLite3/SQLite3.databases";
 
 const tableName = "mensajes";
 
 export const getMessages = async () => {
   try {
     const msgs = await DBService.get(tableName,"");
-
+    
     return msgs
   } catch (err) {
     return null
@@ -15,26 +15,24 @@ export const getMessages = async () => {
 };
 
 
-export const newMessage = async (req: Request, res: Response) => {
+export const newMessage = async (data:any) => {
   try {
-    const { nombre, descripcion } = req.body;
+    // const { nombre, mensaje } = req.body;
 
-    const data = {
-      nombre,
-      descripcion,
-    };
+    // const data = {
+    //   nombre,
+    //   mensaje,
+    // };
 
-    const newId = await DBService.create(tableName, data);
+    const newId = await DBService.create('mensajes', data);
 
     const newMessage = await DBService.get(tableName, newId);
-
-    res.json({
-      data: newMessage,
-    });
+    return newMessage
   } catch (err) {
-    res.status(500).json({
-      // error: err.message,
-      // stack: err.stack,
-    });
+    return err
+    // res.status(500).json({
+    //   // error: err.message,
+    //   // stack: err.stack,
+    // });
   }
 };

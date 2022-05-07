@@ -5,16 +5,15 @@ let user = null
 socket.emit('askData')
 
 function sendData (data) {
-  console.log("sendata")
-  const input = document.getElementById("msg")
-  socket.emit('new-message',user,input.value)
+  const input = document.getElementById("msg").value
+  socket.emit('new-message',user,input)
 }
 function sendUser (e) {
   user = document.getElementById("user").value
 }
 
 function render (data) {
-  var html = data.map ((elem,index) => {
+  var html = data?.map ((elem,index) => {
     return `<div>
       <strong>Usuario: ${elem.user}</strong>:
       <em>${elem.message}<em>
@@ -26,6 +25,10 @@ function render (data) {
   
 }
 socket.on('messages',  data => {
-  console.log('Recibi mensaje')
-  render(data)
+  if (data){
+    
+    info = data.data
+    console.log('Recibi mensaje')
+    render(info)
+  }
 })

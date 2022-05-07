@@ -1,5 +1,5 @@
 import { DBService } from "../../models/SQLite3/SQLite3.databases";
-
+import { getMessages, newMessage } from "../controllers/chat/chat";
 const http = require("http");
 const io = require("socket.io");
 let alert = require('alert'); 
@@ -29,16 +29,16 @@ export default function setWebSocket (server:any)  {
   myServer.on("connection", (socket:any) => {
     console.log("Un cliente se conecto en el socket: ", socket.id);
 
-    socket.on("new-message", (userData:any, data:any) => {
+    socket.on("new-message", (userData:string, data:string) => {
       if (userData!=null) {
-  
-        const newMessage = {
-          nombre: userData,
-          mensaje: data,
+        const info = {
+          userData,
+          data,
         };
-        
-        DBService.create("mensajes,",newMessage)
-        let msgs = DBService.get("mensajes","")
+        newMessage(info)
+        // DBService.create("mensajes,",newMessage)
+        let msgs = getMessages()
+         //uso el .data porque devuelve un obj con el componente data, y si mando el obj completo tira error
         myServer.emit("messages",msgs)
 
       }
@@ -46,15 +46,17 @@ export default function setWebSocket (server:any)  {
         alert("Ingresa un usuario")
       }
     })
-      
-
-
+    
     socket.on("askData", (data:any) => {
       console.log("Llego data");
-      const msgs = DBService.get("mensajes", "")
-      
+      let msgs = DBService.get("mensajes", "")
+      if(msgs){
+        msgs = msgs.data
+        socket.emit("messages", msgs);
+
+      }
       console.log("hay mensajes:", msgs)
-      socket.emit("messages", msgs);
+      
     });
   
   });
