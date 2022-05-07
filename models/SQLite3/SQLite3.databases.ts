@@ -1,54 +1,56 @@
-import knex from "knex";
 
-const { sqlite } = require("../../src/utils/knexFileSQLite");
+import knex from 'knex';
+const { dbConfig } = require('../../src/utils/knexFileSQLite');
 
-let Knex = knex(sqlite);
-Knex.schema
-  .dropTable ('cars')
-  .then(() => {
-    console.log("Tabla Cars borrada")
-  })
+class DB {
+  connection: any;
 
-Knex.schema
-  .createTable(
-    "cars",
-    (table: {
-      increments: (arg0: string) => void;
-      string: (arg0: string) => void;
-      integer: (arg0: string) => void;
-    }) => {
-      table.increments("id");
-      table.string("name");
-      table.integer("price");
-    }
-  )
-  .then(() => console.log("Table Created"))
-  .catch((err: any) => {
-    console.log("There was an error creating the table cars");
-    console.log(err);
-  })
-  .finally(() => {
-    Knex.destroy();
-  });
+  constructor() {
+    // const environment = process.env.NODE_ENV || 'development';
+    // console.log(`SETTING ${environment} DB`);
+    // const options = dbConfig[environment];
+    this.connection = knex(dbConfig);
+  }
 
-const cars = [
-  { name: "audi", price: 1000 },
-  { name: "moto", price: 2000 },
-  { name: "carr", price: 3000 },
-  { name: "ford", price: 4000 },
-  { name: "mercedes", price: 5000 },
-  { name: "susuki", price: 6000 },
-  { name: "chevrolet", price: 7000 },
-];
+  init() {
+    this.connection.schema.hasTable('mensajes').then((exists: boolean) => {
+      if (exists){
+        // this.connection.schema.dropTable('mensajes');
+        // console.log("Tabla mensajes borrada")
+        return
+      }
+      console.log('Creamos la tabla de mensajes!');
 
-Knex("cars")
-  .insert(cars)
-  .then(() => {
-    console.log("Elementos agregados");
-  })
-  .catch((err: Error) => {
-    console.log(err);
-  })
-  .finally(() => {
-    Knex.destroy()
-  });
+      return this.connection.schema.createTable(
+        'mensajes',
+        async (mensajesTable: { increments: () => void; string: (arg0: string) => { (): any; new(): any; notNullable: { (): void; new(): any; }; }; integer: (arg0: string) => { (): any; new(): any; notNullable: { (): void; new(): any; }; unsigned: { (): { (): any; new(): any; references: { (arg0: string): { (): any; new(): any; inTable: { (arg0: string): void; new(): any; }; }; new(): any; }; }; new(): any; }; }; decimal: (arg0: string, arg1: number, arg2: number) => void; timestamps: (arg0: boolean, arg1: boolean) => void; }) => {
+          mensajesTable.increments();
+          mensajesTable.string('nombre').notNullable();
+          mensajesTable.string('mensaje').notNullable();
+          mensajesTable.timestamps(true, true);
+          
+        }
+      );
+    });
+  }
+
+  get(tableName: any, id: string) {
+    if (id) return this.connection(tableName).where('id', id);
+
+    return this.connection(tableName);
+  }
+ 
+  create(tableName: string, data: { nombre: string; mensaje:string; }) {
+    return this.connection(tableName).insert(data);
+  }
+
+  update(tableName: any, id: string, data: Object) {
+    return this.connection(tableName).where('id', id).update(data);
+  }
+
+  delete(tableName: any, id: string) {
+    return this.connection(tableName).where('id', id).del();
+  }
+}
+
+export const DBService = new DB();

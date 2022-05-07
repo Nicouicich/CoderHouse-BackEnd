@@ -14,8 +14,9 @@ class DB {
   init() {
     this.connection.schema.hasTable('productos').then((exists: boolean) => {
       if (exists){
-        this.connection.schema.dropTable('productos');
-        console.log("Tabla productos borrada")
+        // this.connection.schema.dropTable('productos');
+        // console.log("Tabla productos borrada")
+        return
       }
       console.log('Creamos la tabla productos!');
 

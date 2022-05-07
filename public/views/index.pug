@@ -1,0 +1,51 @@
+head
+  title Productos
+  link(rel="stylesheet" href="/styles.css")
+
+
+body
+
+  div
+    h1 Chat
+
+    h3 Ingrese Nombre de Usuario
+    input(type="text" name="user" id="user")
+    button(onclick="sendUser(this)")="Enviar"
+    br
+    h4 Mensaje Nuevo
+    input(type="text" name="name" id="msg")
+    button(onclick="sendData(this)")="Enviar"
+    h4 Mensajes
+    div(id="messages")
+  //- h1 Nuevo Producto
+  //- form(method="POST" action="/api/chat")
+  //-   div 
+  //-     label(for="title") Nombre
+  //-     input(type="string" name="title" required)
+  //-   div 
+  //-     label(for="price") Precio
+  //-     input(type="number" name="price" required)
+  //-   div 
+  //-     label(for="thumbnail") URL
+  //-     input(type="string" name="thumbnail" required)
+  //-   div 
+  //-     input(type="submit")
+
+  //- div
+  //-   h1 Productos
+  //-   table
+  //-           td= prod.title 
+  //-           td= prod.price
+  //-           td               
+  //-             img(src=prod.thumbnail, alt="")
+
+  
+
+
+
+ 
+  script(src='/socket.io/socket.io.js')
+  script(src='../client.js') 
+  //- script(src='../../dist/main.js')
+  
+  
