@@ -2,7 +2,7 @@
 const socket = io.connect('http://localhost:8080',{forceNew: true})
 let user = null
 
-// socket.emit('askData')
+socket.emit('askData')
 
 function sendData (data) {
   console.log("sendata")

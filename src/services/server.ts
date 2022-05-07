@@ -49,13 +49,13 @@ export default function setWebSocket (server:any)  {
       
 
 
-    // socket.on("askData", (data:any) => {
-    //   console.log("Llego data");
-    //   const msgs = DBService.get("mensajes", "")
+    socket.on("askData", (data:any) => {
+      console.log("Llego data");
+      const msgs = DBService.get("mensajes", "")
       
-    //   console.log("hay mensajes:", msgs)
-    //   socket.emit("messages", msgs);
-    // });
+      console.log("hay mensajes:", msgs)
+      socket.emit("messages", msgs);
+    });
   
   });
 
