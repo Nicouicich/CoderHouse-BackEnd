@@ -2,7 +2,7 @@ import { Product } from "./Product";
 import { Express, Request, Response } from "express";
 import fs from "fs";
 import path from "path";
-import { DBService } from "../../../models/MariaDB/MariaDB";
+import { DBService } from "../../models/MariaDB/MariaDB";
 
 // const fileName: string = path.resolve(__dirname, "products.txt");
 // async function getProducts() {

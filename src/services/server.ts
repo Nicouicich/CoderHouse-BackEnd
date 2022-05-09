@@ -1,4 +1,4 @@
-import { DBService } from "../../models/SQLite3/SQLite3.databases";
+import { DBService } from "../models/SQLite3/SQLite3.databases";
 import { getMessages, newMessage } from "../controllers/chat/chat";
 const http = require("http");
 const io = require("socket.io");
@@ -29,11 +29,11 @@ export default function setWebSocket (server:any)  {
   myServer.on("connection", (socket:any) => {
     console.log("Un cliente se conecto en el socket: ", socket.id);
 
-    socket.on("new-message", (userData:string, data:string) => {
-      if (userData!=null) {
+    socket.on("new-message", (nombre:string, mensaje:string) => {
+      if (nombre && mensaje) {
         const info = {
-          userData,
-          data,
+          nombre,
+          mensaje,
         };
         newMessage(info)
         // DBService.create("mensajes,",newMessage)
@@ -47,15 +47,12 @@ export default function setWebSocket (server:any)  {
       }
     })
     
-    socket.on("askData", (data:any) => {
+    socket.on("askData", async (data:any) => {
       console.log("Llego data");
-      let msgs = DBService.get("mensajes", "")
+      let msgs = await getMessages()
       if(msgs){
-        msgs = msgs.data
         socket.emit("messages", msgs);
-
       }
-      console.log("hay mensajes:", msgs)
       
     });
   

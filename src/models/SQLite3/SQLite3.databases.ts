@@ -1,5 +1,5 @@
 import knex from "knex";
-const { dbConfig } = require("../../src/utils/knexFileSQLite");
+const { dbConfig } = require("../../utils/knexFileSQLite");
 
 class DB {
   connection: any;
@@ -68,7 +68,8 @@ class DB {
   }
 
   create(tableName: string, data: { nombre: string; mensaje: string }) {
-    console.log("Guardando mensaje en la bd: ", data)
+    // console.log("Guardando mensaje en la bd: ", data);
+    console.log(tableName, data)
     return this.connection(tableName).insert(data);
   }
 

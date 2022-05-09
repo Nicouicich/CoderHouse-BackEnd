@@ -15,8 +15,8 @@ function sendUser (e) {
 function render (data) {
   var html = data?.map ((elem,index) => {
     return `<div>
-      <strong>Usuario: ${elem.user}</strong>:
-      <em>${elem.message}<em>
+      <strong>Usuario: ${elem.nombre}</strong>:
+      <em>${elem.mensaje}<em>
     `
   })
   .join(' ')
@@ -26,9 +26,7 @@ function render (data) {
 }
 socket.on('messages',  data => {
   if (data){
-    
-    info = data.data
     console.log('Recibi mensaje')
-    render(info)
+    render(data)
   }
 })

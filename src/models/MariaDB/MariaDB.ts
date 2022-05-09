@@ -1,5 +1,5 @@
 import knex from 'knex';
-const { dbConfig } = require('../../src/utils/knexFileMySQL');
+const { dbConfig } = require('../../utils/knexFileMySQL');
 
 class DB {
   connection: any;
@@ -30,7 +30,6 @@ class DB {
           productosTable.decimal('precio', 4, 2);
           productosTable.timestamps(true, true);
           
-
           const initProducts = [
             {
               nombre: 'cartuchera',

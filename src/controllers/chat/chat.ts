@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DBService } from "../../../models/SQLite3/SQLite3.databases";
+import { DBService } from "../../models/SQLite3/SQLite3.databases";
 
 const tableName = "mensajes";
 
