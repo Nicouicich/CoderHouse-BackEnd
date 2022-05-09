@@ -29,7 +29,7 @@ export default function setWebSocket (server:any)  {
   myServer.on("connection", (socket:any) => {
     console.log("Un cliente se conecto en el socket: ", socket.id);
 
-    socket.on("new-message", (nombre:string, mensaje:string) => {
+    socket.on("new-message", async (nombre:string, mensaje:string) => {
       if (nombre && mensaje) {
         const info = {
           nombre,
@@ -37,10 +37,10 @@ export default function setWebSocket (server:any)  {
         };
         newMessage(info)
         // DBService.create("mensajes,",newMessage)
-        let msgs = getMessages()
+        let msgs =await getMessages()
          //uso el .data porque devuelve un obj con el componente data, y si mando el obj completo tira error
         myServer.emit("messages",msgs)
-
+        
       }
       else{
         alert("Ingresa un usuario")
@@ -48,7 +48,6 @@ export default function setWebSocket (server:any)  {
     })
     
     socket.on("askData", async (data:any) => {
-      console.log("Llego data");
       let msgs = await getMessages()
       if(msgs){
         socket.emit("messages", msgs);
