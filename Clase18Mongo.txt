@@ -40,3 +40,34 @@ db.productos.insertOne({nombre:"Tele" , descripcion:"Samsung" , precio:3333 , st
 
 B
 db.productos.find({nombre:"Teclado", precio: {$lt:2000}})
+  1
+  db.productos.find({ $and: [ { precio: {$gt:1000} }, {precio: {$lt:5000} } ] })
+  2
+  db.productos.find({nombre:"Monitor", precio: {$gt:1000}})
+  3
+  db.productos.find().sort({"precio":1})[2].nombre
+  otra opcion: db.productos.find().sort({"precio":1}).skip(2).limit(1)  (pero falta aclarar el campo)
+
+C - Para hacer este ejercicio saque el stock que le habia agregado con este comando:
+db.productos.update({"stock": {$gt: 0}}, {$unset: {stock:""}}, {multi:true})
+Con esta sentencia le puedo agregar a todos los que no tengan el nombre vacio el stock de 100
+db.productos.update({"nombre": {$ne:""}}, {$set: {stock:100}}, {multi:true})
+
+D
+db.productos.update({"precio": {$gt:4000}}, {$set: {stock:0}}, {multi:true})
+
+E
+db.productos.deleteMany({"precio": {$lt:2000}})
+
+6
+db.createUser(
+ {
+ user: "pepe",
+ pwd: "asd456",
+ roles: [
+ { role: "read", db: "gran-mate-gourmet" }
+ ]
+ }
+)
+--
+Se cierra el sv y se lo vuelve a ejecutar como mongod --auth para habilitar el modo autenticacion
