@@ -20,6 +20,7 @@ export const getAllCarts = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
+
 export const createCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const idProduct = req.body.idProduct;
@@ -65,6 +66,7 @@ export const createCart = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+
 export const deleteCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
@@ -75,7 +77,7 @@ export const deleteCart = async (req: Request, res: Response, next: NextFunction
       msg: 'Cart deleted',
     });
   } catch (err) {
-    if(err instanceof Error)
+    if (err instanceof Error)
       res.status(500).json({
         error: err.message,
         stack: err.stack,
@@ -83,6 +85,7 @@ export const deleteCart = async (req: Request, res: Response, next: NextFunction
     else next(err);
   }
 };
+
 
 export const addProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -94,48 +97,71 @@ export const addProduct = async (req: Request, res: Response, next: NextFunction
 
     let cart = await CartModel.findById(id);
 
-    if (!cart){
+    if (!cart) {
 
       return res.status(404).json({
         msgs: 'Cart not found!',
       });
     }
     if (product) {
-      if (quantity > product.stock) {
-        res.json({
-          data: "The quantity of the added product is greater than the quantity available in stock.",
+      //Primero reviso que no este el producto
+      let modified: boolean = false
+      const productos = cart.products.map(prod => {
+        if (prod.id == idProduct) {
+          if (prod.cantidad + quantity < prod.stock){
+            prod.cantidad += quantity 
+            modified = true
+          }
+          else{
+            return res.json({
+              data: "The quantity of the added product is greater than the quantity available in stock.",
+            });
+          }
+        }
+        return prod
+      })
+      if (modified){
+
+        await CartModel.findByIdAndUpdate(id, { products: productos })
+        return res.json({
+          msgs: cart,
         });
       }
-      let newProduct: IDtoProduct = {
-        id: product._id.toString(),
-        nombre: product.nombre,
-        descripcion: product.descripcion,
-        precio: product.precio,
-        stock: product.stock,
-        categoryId: product.categoryId,
-        cantidad: quantity,
+      else {
+        if (quantity > product.stock) {
+          return res.json({
+            data: "The quantity of the added product is greater than the quantity available in stock.",
+          });
+        }
+        let newProduct: IDtoProduct = {
+          id: product._id.toString(),
+          nombre: product.nombre,
+          descripcion: product.descripcion,
+          precio: product.precio,
+          stock: product.stock,
+          categoryId: product.categoryId,
+          cantidad: quantity,
+        }
+
+        const cartUpdated = await CartModel.updateOne(
+          { _id: cart._id },
+          { $push: { products: newProduct } }
+        )
+
+        res.json({
+          data: cart,
+        });
       }
 
-      const cartUpdated = await CartModel.updateOne(
-        { _id: cart._id },
-        { $push: { products: newProduct } }
-      )
-
-      res.json({
-        data: cart,
-      });
     }
-  
-  else
-    res.json({
-      msg: 'Product does not exists',
-    });
-  } catch (err) {
-    if(err instanceof Error)
-      res.status(500).json({
-        error: err.message,
-        stack: err.stack,
+
+    else
+      return res.json({
+        msg: 'Product does not exists',
       });
+  } catch (err) {
+    if (err instanceof Error)
+      return err.message
     else next(err);
   }
 };
@@ -150,7 +176,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     const cart = await CartModel.findById(id)
 
 
-    if (!cart){
+    if (!cart) {
 
       return res.status(404).json({
         msgs: 'Cart not found!',
@@ -159,33 +185,40 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     const product = await getItemById(idProduct)
     if (product) {
       if (quantity > product.stock) {
-        res.json({
+        return res.json({
           data: "The quantity of the added product is greater than the quantity available in stock.",
         });
       }
-      else{
-        const productos =cart.products.map (prod => {
-          if (prod.id == idProduct)
+      else {
+        let modified: boolean = false
+        const productos = cart.products.map(prod => {
+          if (prod.id == idProduct) {
             prod.cantidad = quantity
+            modified = true
+          }
           return prod
         })
-        await CartModel.findByIdAndUpdate(id, {products:productos})
+        await CartModel.findByIdAndUpdate(id, { products: productos })
+        if (modified) {
 
-        res.json({
-          data: cart,
-        });
+          return res.json({
+            data: cart,
+          });
+        }
+        else
+          return res.json({
+            data: "Product not found in cart",
+          });
+
       }
-      
-      
-
     }
-  else
-    res.json({
-      msg: 'Product does not exists',
-    });
+    else
+      return res.json({
+        msg: 'Product does not exists',
+      });
   } catch (err) {
-    if(err instanceof Error)
-      res.status(500).json({
+    if (err instanceof Error)
+      return res.status(500).json({
         error: err.message,
         stack: err.stack,
       });
@@ -194,10 +227,10 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 };
 
 
-export const getCartById = async (req: Request, res: Response, next: NextFunction)=> {
+export const getCartById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    
+
     const cart = await CartModel.findById(id);
 
     if (!cart)
@@ -209,7 +242,7 @@ export const getCartById = async (req: Request, res: Response, next: NextFunctio
       cart
     });
   } catch (err) {
-    if(err instanceof Error)
+    if (err instanceof Error)
       res.status(500).json({
         error: err.message,
         stack: err.stack,
