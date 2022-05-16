@@ -1,4 +1,5 @@
 import express from "express";
+import 'dotenv/config'
 import { uuid } from "uuidv4";
 import { router as mainRouter } from "./routes/routes";
 // import { newTestProducts } from "./utils/test/test";
@@ -6,8 +7,10 @@ import { DBService } from "./models/MariaDB/MariaDB";
 import { DBService as DBSQLite } from "./models/SQLite3/SQLite3.databases";
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
+import { initMongoDB } from "./services/mongo.database";
 import setWebSocket from "./services/server";
 import path from "path";
+import { ProductsModel } from "./models/schemas/products";
 
 const http = require("http");
 
@@ -25,11 +28,17 @@ app.set('view engine', 'pug')
 
 
 
-DBService.init()
+// DBService.init()
 DBSQLite.init()
 
-server.listen(port, () => console.log("Server Up en el puerto ", port));
 app.use("/api/", mainRouter);
 setWebSocket(server)
-//newTestProducts() //Unicamente lo corro para generar un par de archivos. Descomentar para generar una muestra
 
+const init = async () => {
+  await initMongoDB();
+  const puerto = process.env.PORT || 8080;
+
+  server.listen(puerto, () => console.log(`SERVER UP ON PORT ${puerto}`));
+};
+
+init();

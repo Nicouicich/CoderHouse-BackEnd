@@ -1,8 +1,8 @@
 use gran-mate-gourmet
-db.createCollection("productos")
-db.createCollection("mensajes")
+db.createCollection("producto")
+db.createCollection("mensaje")
 
-Punto 1 y 2
+Punto 1 y 2|
 db.mensajes.insert([{nombre:"Nicolas", mensaje:"Hola"},
 {nombre:"Robert", mensaje:"Como"},
 {nombre:"Matias", mensaje:"Estas"},
@@ -14,8 +14,9 @@ db.mensajes.insert([{nombre:"Nicolas", mensaje:"Hola"},
 {nombre:"Marcos", mensaje:"tres"},
 {nombre:"Brain", mensaje:"dametodo"}
 ])
-db.productos.insert([{
-nombre:"Teclado" , descripcion:"Hyperx" , precio:1500 , stock:20},
+db.categories.insert([{nombre:"Mate", descripcion:"De color"},{nombre:"Yerba", descripcion:"Amarga"}, {nombre:"Termo", descripcion:"1,5L"}])
+db.products.insert([{
+nombre:"Teclado" , descripcion:"Hyperx" , precio:1500 , stock:20, categoryName:"Mate"},
 {nombre:"Monitor" , descripcion:"LG" , precio:12331 , stock:12},
 {nombre:"Mouse" , descripcion:"Logitech" , precio:1112 , stock:1},
 {nombre:"Notebook" , descripcion:"Asus" , precio:14123 , stock:5},

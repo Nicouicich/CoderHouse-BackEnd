@@ -4,23 +4,24 @@ import { middlewareAuth } from "./middlewares/middlewares";
 import { DBService } from "../models/MariaDB/MariaDB";
 
 import {
-  getProducts,
-  newProduct,
-  deleteByID,
-  upgradeById,
+  getAllProducts,
   getProductById,
-} from "../controllers/products/products";
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  checkBodyProduct,
+} from "../controllers/products/products.mongo";
 const router = Router();
 
-router.get('/', getProducts);
+router.get('/', getAllProducts);
 
 router.get('/:id', getProductById);
 
-router.post('/',middlewareAuth, newProduct);
+router.post('/',middlewareAuth, createProduct);
 
-router.put('/:id', upgradeById);
+router.put('/:id', checkBodyProduct,updateProduct);
 
-router.delete('/:id',middlewareAuth, deleteByID);
+router.delete('/:id',middlewareAuth, deleteProduct);
 
 
 export { router };
