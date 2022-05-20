@@ -6,7 +6,7 @@ import {router as categoryRouter} from "./categories";
 
 const router = Router()
 
-router.use('/productos', productsRouter)
+router.use('/products', productsRouter)
 router.use('/carts', cartsRouter)
 router.use ('/chat',chatRouter)
 router.use ('/categories',categoryRouter)

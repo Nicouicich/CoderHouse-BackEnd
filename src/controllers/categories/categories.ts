@@ -45,16 +45,16 @@ export const getCategoryById = async (req: Request, res: Response, next: NextFun
 
 export const createCategory = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { name, description } = req.body;
+    const { nombre, descripcion } = req.body;
 
-    if (!name || !description)
+    if (!nombre || !descripcion)
       return res.status(400).json({
         msg: 'Invalid Body',
       });
 
     const newCategory = await CategoryModel.create({
-      name,
-      description,
+      nombre,
+      descripcion,
     });
 
     res.json({
@@ -73,16 +73,16 @@ export const createCategory = async (req: Request, res: Response, next: NextFunc
 export const updateCategory = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const { name, description } = req.body;
+    const { nombre, descripcion } = req.body;
 
-    if (!name || !description)
+    if (!nombre || !descripcion)
       return res.status(400).json({
         msg: 'Invalid Body',
       });
 
     const categoryUpdated = await CategoryModel.findByIdAndUpdate(
       id,
-      { name, description },
+      { nombre, descripcion },
       { new: true }
     );
 
@@ -120,10 +120,10 @@ export const deleteCategory = async (req: Request, res: Response, next: NextFunc
 };
 
 
-export const getCategoryIdByName = async (name: string) => {
+export const getCategoryIdBynombre = async (nombre: string) => {
   try {
 
-    const id = await CategoryModel.find({nombre: name});
+    const id = await CategoryModel.find({nombre: nombre});
     if (!id)
       return null
     return id[0]._id

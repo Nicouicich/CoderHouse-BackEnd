@@ -1,0 +1,46 @@
+Categories:
+    Get all categories: GET /api/categories
+    Get a category: GET /api/categories/{ID}
+    Create a category: Post /api/categories
+        Body parameters:
+        nombre: string (required)
+        descripcion: string (required)
+    Update a category: Put /api/categories/{ID}
+      Body parameters:
+        nombre: string (required)
+        descripcion: string (required)
+    Delete a category: Delete /api/categories/{ID}
+
+
+Cart:
+    Get all carts: GET /api/carts
+    Get a cart: GET /api/carts/{ID}
+    Create a cart: Post /api/carts
+      Body parameters:
+      idProduct: string (required)
+      quantity: number (required)
+    Update a product quantity: Put /api/carts/{ID}
+      Body parameters:
+        idProduct: string (required)
+        quantity: number (required)
+    Delete a cart: Delete /api/cart/{ID}
+
+Product:
+    Get all products: GET /api/products
+    Get a product: GET /api/products/{ID}
+    Create a product: Post /api/products
+      Body parameters:
+        nombre:string (required)
+        descripcion:string (required)
+        stock:number (required)
+        precio:number (required)
+        categoryId:string (required)
+      Update a product quantity: Put /api/products/{ID}
+        Body parameters:
+          nombre:string (required)
+          descripcion:string (required)
+          stock:number (required)
+          precio:number (required)
+          categoryId:string (required)
+      Delete a product: Delete /api/products/{ID}
+
