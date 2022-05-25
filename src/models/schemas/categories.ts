@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { Document } from 'mongoose';
 export const categoryCollectionName = 'categorie';
 
 export interface ICategory {

@@ -1,5 +1,4 @@
 import { Express, Router, Request, Response } from "express";
-import { Product } from "../controllers/products/Product";
 import { middlewareAuth } from "./middlewares/middlewares";
 import { DBService } from "../models/MariaDB/MariaDB";
 
@@ -10,7 +9,7 @@ import {
   updateProduct,
   deleteProduct,
   checkBodyProduct,
-} from "../controllers/products/products.mongo";
+} from "../controllers/products.mongo";
 const router = Router();
 
 router.get('/', getAllProducts);

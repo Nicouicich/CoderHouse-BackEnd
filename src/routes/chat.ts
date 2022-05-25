@@ -1,16 +1,17 @@
 import { Express, Router, Request, Response } from "express";
 import { DBService } from "../models/MariaDB/MariaDB";
 import { getMessages, newMessage } from "../controllers/chat/chat";
+import { addMessage } from "../controllers/chat2";
+import { IMessage } from "../models/schemas/chat";
 
 const router = Router();
 
 router.get('/', (req, res) => {
   res.render('index')
 })
-
+//hay q configurar para addmessage antes q newmessage
 router.post("/",(req: Request, res: Response)=>{
   const { nombre, mensaje } = req.body;
-
     const data = {
       nombre,
       mensaje,

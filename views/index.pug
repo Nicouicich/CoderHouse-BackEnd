@@ -8,12 +8,28 @@ body
   div
     h1 DEMO DE WHATSAPP
 
-    h3 Ingrese Nombre de Usuario
-    input(type="text" name="user" id="user")
-    button(onclick="sendUser(this)")="Enviar"
+    h3 Email
+    input(type="text" name="email" id="email")
     br
-    h4 Mensaje Nuevo
-    input(type="text" name="msg" id="msg")
+    h3 Nombre
+    input(type="text" name="nombre" id="nombre")
+    br
+    h3 Apellido
+    input(type="text" name="apellido" id="apellido")
+    br
+    h3 Alias
+    input(type="text" name="alias" id="alias")
+    br
+    h3 Edad
+    input(type="text" name="edad" id="edad")
+    br
+    h3 Avatar
+    input(type="text" name="avatar" id="avatar")
+    br
+    h4 Mensaje
+    input(type="text" name="mensaje" id="mensaje")
+    br
+    br
     button(onclick="sendData(this)")="Enviar"
     h4 Mensajes
     div(id="messages")
@@ -39,7 +55,7 @@ body
   //-           td               
   //-             img(src=prod.thumbnail, alt="")
 
-  script(src='/socket.io/socket.io.js')
-  script(src='../client.js') 
+  script(src='/socket.io/socket.io.js' )
+  script(type="module" src='../client.js' ) 
   
   

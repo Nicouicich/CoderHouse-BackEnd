@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { ProductsModel } from '../../models/schemas/products';
-import { CategoryModel } from '../../models/schemas/categories';
+import { ProductsModel } from '../models/schemas/products';
+import { CategoryModel } from '../models/schemas/categories';
 
 export const checkBodyProduct = async (req: Request, res: Response, next: NextFunction) => {
   const { name, description, stock, price, categoryId } = req.body;
@@ -101,7 +101,6 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
   try {
     const { id } = req.params;
     const { name, description, stock, price, categoryId } = req.body;
-
     let item = await ProductsModel.findById(id);
 
     if (!item)
@@ -111,7 +110,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 
     const productUpdated = await ProductsModel.findByIdAndUpdate(
       id,
-      { name, description, stock, price, categoryId },
+      { nombre:name, descripcion:description, stock:stock, precio:price, categoryId },
       { new: true }
     );
 

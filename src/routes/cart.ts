@@ -7,7 +7,7 @@ import {
   getCartById,
   deleteCart,
   updateProduct
-} from "../controllers/cart/carts";
+} from "../controllers/carts";
 
 
 export const router = Router();

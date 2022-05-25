@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { deleteProduct as deleteProductById, getItemById } from "../products/products.mongo";
-import { CartModel } from "../../models/schemas/cart";
-import { IDtoProduct } from "../../models/schemas/products";
+import { deleteProduct as deleteProductById, getItemById } from "./products.mongo";
+import { CartModel } from "../models/schemas/cart";
+import { IDtoProduct } from "../models/schemas/products";
 
 export const getAllCarts = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -174,7 +174,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     const idProduct = req.body.idProduct;
     const quantity: number = Number(req.body.quantity)
     const cart = await CartModel.findById(id)
-
+    console.log("product id:", idProduct)
 
     if (!cart) {
 
@@ -183,6 +183,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
       });
     }
     const product = await getItemById(idProduct)
+    console.log(product)
     if (product) {
       if (quantity > product.stock) {
         return res.json({
