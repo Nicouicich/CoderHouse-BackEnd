@@ -26,6 +26,9 @@ app.use(express.static(publicFolderPath))
 app.set('views', viewsFolderPath)
 app.set('view engine', 'pug')
 
+app.get('/' , (req,res) => {
+  res.render('index', { })
+})
 
 
 // DBService.init()

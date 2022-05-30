@@ -13,7 +13,7 @@ const msge = new schema.Entity(
 export const finalSchema = new schema.Array(msge);
 
 
-export default function denormalizeData (data) {
+export function denormalizeData (data) {
 	const denormalizedData = denormalize(data.result, finalSchema, data.entities);
 
 	return denormalizedData;

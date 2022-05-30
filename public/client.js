@@ -1,4 +1,4 @@
-import * as  normalizer from "./normalizer.js";
+import { denormalizeData } from "./normalizer.js";
 // const denormalizeData = require('./normalizer')
 
 const socket = io.connect("http://localhost:8080", { forceNew: true });
@@ -23,7 +23,7 @@ function sendData() {
 }
 
 
-function render(data) {
+function render(mensajes) {
   const mensajesContainer = document.getElementById('messages');
 
   const denormalizedData = denormalizeData(mensajes)
@@ -34,11 +34,10 @@ function render(data) {
 		p.innerHTML = `
 					<span class='mx-2 mensaje__email'>${mensaje.author.email}</span>
 					<span class='mx-2 mensaje__time'>${mensaje.author.nombre}</span>
-					<span class='mx-2 mensaje__text'>${mensaje.text}</span>`;
+					<span class='mx-2 mensaje__text'>${mensaje.mensaje}</span>`;
 		mensajesContainer.appendChild(p);
 	});
 
-  document.getElementById("messages").innerHTML = html;
 }
 
 
