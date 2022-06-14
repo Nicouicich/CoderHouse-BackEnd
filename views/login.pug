@@ -1,0 +1,17 @@
+head
+  title Productos
+  link(rel="stylesheet" href="/styles.css")
+
+
+body
+
+  h1 Inicio de Sesión
+  form(method="POST" action="/api/login")
+    div 
+      label(for="username") Nombre
+      input(type="string" name="username" required)
+      br
+      label(for="password") Contraseña
+      input(type="string" name="password" required)
+      div 
+        input(type="submit")

@@ -3,10 +3,11 @@ import { DBService } from "../models/MariaDB/MariaDB";
 import { getMessages, newMessage } from "../controllers/chat/chat";
 import { addMessage } from "../controllers/chat2";
 import { IMessage } from "../models/schemas/chat";
+import { middlewareAuth } from "./middlewares/middlewareAuth";
 
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/',middlewareAuth, (req, res) => {
   res.render('index')
 })
 //hay q configurar para addmessage antes q newmessage

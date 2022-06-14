@@ -27,7 +27,6 @@ function render(mensajes) {
   const mensajesContainer = document.getElementById('messages');
 
   const denormalizedData = denormalizeData(mensajes)
-  console.log(denormalizedData);
 
 	denormalizedData.forEach(mensaje => {
 		let p = document.createElement('p');

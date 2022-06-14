@@ -3,7 +3,6 @@ import { CategoryModel } from '../models/schemas/categories';
 
 export const getAllCategories = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(this);
     const items = await CategoryModel.find();
 
     res.json({

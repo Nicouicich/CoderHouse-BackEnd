@@ -24,9 +24,6 @@ let date =
   ":" +
   day.getSeconds();
 
-
-
-
 export default function setWebSocket(server: any) {
   const myServer = io(server);
 

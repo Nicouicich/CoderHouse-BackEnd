@@ -1,16 +1,13 @@
 import express from "express";
 import 'dotenv/config'
-import { uuid } from "uuidv4";
 import { router as mainRouter } from "./routes/routes";
-// import { newTestProducts } from "./utils/test/test";
-import { DBService } from "./models/MariaDB/MariaDB";
 import { DBService as DBSQLite } from "./models/SQLite3/SQLite3.databases";
-import { createServer } from "http";
-import { Server, Socket } from "socket.io";
 import { initMongoDB } from "./services/mongo.database";
 import setWebSocket from "./services/server";
 import path from "path";
-import { ProductsModel } from "./models/schemas/products";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import { StoreOptions } from "./services/storeOptions";
 
 const http = require("http");
 
@@ -34,6 +31,9 @@ app.get('/' , (req,res) => {
 // DBService.init()
 DBSQLite.init()
 
+
+app.use(cookieParser())
+app.use(session(StoreOptions))
 app.use("/api/", mainRouter);
 setWebSocket(server)
 

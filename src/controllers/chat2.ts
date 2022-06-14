@@ -28,7 +28,6 @@ export const getAllMessages = async () => {
 
     let normalizedMessages = normalize(messagesOriginalData, msgesSchema);
     
-    console.log(util.inspect(normalizedMessages, true, 3, true));
     return normalizedMessages;
   } catch (err) {
     console.log('ERROR');
