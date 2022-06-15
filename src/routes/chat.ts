@@ -1,6 +1,6 @@
 import { Express, Router, Request, Response } from "express";
 import { DBService } from "../models/MariaDB/MariaDB";
-import { getMessages, newMessage } from "../controllers/chat/chat";
+import { getMessages, newMessage } from "../controllers/chat";
 import { addMessage } from "../controllers/chat2";
 import { IMessage } from "../models/schemas/chat";
 import { middlewareAuth } from "./middlewares/middlewareAuth";
