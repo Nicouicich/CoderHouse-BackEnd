@@ -1,6 +1,7 @@
 import { middlewareAuth } from "./middlewares/middlewareAuth";
-import { Router, Request,Response } from "express";
-
+import { Router, Request,Response, NextFunction } from "express";
+import passport from "passport";
+import util from 'util';
 declare module 'express-session' {
   export interface SessionData {
       info: {
@@ -12,44 +13,48 @@ declare module 'express-session' {
   }
 }
 
+const passportOptions = {}
+
+
 const router = Router()
+const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
+  console.log('Is Authenticated')
+  console.log(req.isAuthenticated());
+  if (!req.isAuthenticated()) return res.status(401).json({ msg: 'Unathorized' });
 
-const users = [
-  {
-    username: 'pepe',
-    password : 'BokitaTheBiggest',
-    admin: true,
+  next();
+}
+
+const isAdmin = (req: Request, res: Response, next:NextFunction) => {
+  console.log('Is Admin Middleware')
+  const user: any = req.user
+  const adm = user.admin
+  console.log("Soy admin? :" ,adm)
+  // const msg = util.inspect(req.session, true, 7, true)
+  // res.json(msg);
+
+  if (!adm) return res.status(401).json({ msg: 'Unathorized - Admin Only' });
+
+  next();
+};
+
+
+router.post('/',  passport.authenticate('login', passportOptions),  (req, res) => {
+    // res.json({ msg: 'Welcome!', user: req.user });
+    res.status(200).redirect('/api/chat')
   },
-  {
-    username: 'juancarlos',
-    password : 'BokitaTheBiggest',
-    admin: false,
-  }
-]
+);
 
 
-
-router.post('/' ,(req: Request, res: Response) => {
-  const { username, password } = req.body;
-
-  const index = users.findIndex((aUser) => aUser.username === username && aUser.password === password);
-
-  if(index < 0)
-    res.status(401).json({ msg: 'no estas autorizado' });
-    
-  else {
-    
-    const user = users[index];
-    req.session.info = {
-      loggedIn: true,
-      contador : 1,
-      username : user.username,
-      admin : user.admin,
-    };
-    res.json({msg: 'Bienvenido!!'})
-  }
-})
-
+// router.get('/', isLoggedIn, isAdmin, async (req, res) => {
+//   // const msg = util.inspect(req.session, true, 7, true)
+//   // res.json(msg);
+//   res.json({
+//     mgs: "HOLA",
+//     session : req.session,
+//     user: req.user
+//   })
+// })
 
 router.get('/secret-endpoint', middlewareAuth, (req: Request, res:Response) => {
   if (req.session.info){
@@ -59,7 +64,7 @@ router.get('/secret-endpoint', middlewareAuth, (req: Request, res:Response) => {
     });
   }
   else{
-    res.redirect('/api/login')
+    res.status(401).redirect('/api/login')
   }
   
 });

@@ -1,12 +1,12 @@
 head
-  title Inicio de Sesión
+  title Registro
   link(rel="stylesheet" href="/styles.css")
 
 
 body
 
-  h1 Inicio de Sesión
-  form(method="POST" action="/api/login")
+  h1 Registro
+  form(method="POST" action="/api/signup")
     div 
       label(for="usuario") Nombre
       input(type="string" name="usuario" required)
@@ -15,5 +15,4 @@ body
       input(type="string" name="contrasena" required)
       div 
         input(type="submit")
-  
-  a(class='button' href='/api/signup') Registro
+  a(class='button' href='/api/login') Iniciar sesion

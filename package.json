@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/Nicouicich/GranMateGourmet-Back#readme",
   "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
     "@faker-js/faker": "^7.0.1",
     "@types/node": "^17.0.29",
     "nodemon": "^2.0.15",

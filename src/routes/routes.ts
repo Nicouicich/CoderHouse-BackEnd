@@ -6,6 +6,8 @@ import {router as categoryRouter} from "./categories";
 import {router as productostestRouter} from "./productos-test";
 import { router as loginRouter } from "./login";
 import { router  as logoutRouter} from "./logout";
+import { router as signupRouter } from "./signup";
+
 const router = Router()
 
 router.use('/products', productsRouter)
@@ -15,6 +17,7 @@ router.use ('/categories',categoryRouter)
 router.use('/productos-test',productostestRouter)
 router.use('/login',loginRouter)
 router.use('/logout',logoutRouter)
+router.use('/signup',signupRouter)
 
 
 export {router}
