@@ -5,6 +5,7 @@ import path from "path";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import minimist from 'minimist'
 import { router as mainRouter } from "./routes/routes";
 import { initMongoDB } from "./services/mongo.database";
 import { StoreOptions } from "./services/storeOptions";
@@ -34,9 +35,17 @@ app.use("/api/", mainRouter);
 
 setWebSocket(server)
 
+const optionalArgsObject = {
+
+  default: {
+    port: '8080',
+  },
+};
+const args = minimist(process.argv, optionalArgsObject);
+
 const init = async () => {
   await initMongoDB();
-  const puerto = process.env.PORT || 8080;
+  const puerto = args.port;
 
   server.listen(puerto, () => console.log(`SERVER UP ON PORT ${puerto}`));
 };
