@@ -1,4 +1,4 @@
-import { Express, Router, Request, Response } from "express";
+import { Router } from "express";
 import { middlewareAuth } from "./middlewares/middlewareAuth";
 import {
   getAllCarts,

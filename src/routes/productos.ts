@@ -1,6 +1,5 @@
-import { Express, Router, Request, Response } from "express";
+import { Router} from "express";
 import { middlewareAuth } from "./middlewares/middlewareAuth";
-import { DBService } from "../models/MariaDB/MariaDB";
 
 import {
   getAllProducts,

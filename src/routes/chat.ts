@@ -1,9 +1,7 @@
-import { Express, Router, Request, Response } from "express";
-import { DBService } from "../models/MariaDB/MariaDB";
-import { getMessages, newMessage } from "../controllers/chat";
+import {Router, Request, Response } from "express";
+import { middlewareAuth } from "./middlewares/middlewareAuth";
 import { addMessage } from "../controllers/chat2";
 import { IMessage } from "../models/schemas/chat";
-import { middlewareAuth } from "./middlewares/middlewareAuth";
 
 const router = Router();
 
@@ -12,12 +10,12 @@ router.get('/',middlewareAuth, (req, res) => {
 })
 //hay q configurar para addmessage antes q newmessage
 router.post("/",(req: Request, res: Response)=>{
-  const { nombre, mensaje } = req.body;
-    const data = {
-      nombre,
+  const { author, mensaje } = req.body;
+    const data : IMessage= {
+      author,
       mensaje,
     };
-  let msg = newMessage(data)
+  let msg = addMessage(data)
   res.json({
     data: msg,
   });
